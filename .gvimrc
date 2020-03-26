@@ -18,13 +18,3 @@ let g:newtr_liststyle=3
 " Bindings
 map <C-n> :NERDTreeToggle<CR>
 map <C-tab> :tabn<CR>
-    
-
-" Vanilla solution for auto closing brackets
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
