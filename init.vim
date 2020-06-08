@@ -13,11 +13,16 @@ let g:newtr_liststyle=3
 call plug#begin()
 Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'townk/vim-autoclose'
+Plug 'jiangmiao/auto-pairs'
 Plug 'fatih/vim-go'
 Plug 'vim-airline/vim-airline'
 Plug 'kien/ctrlp.vim'
+Plug 'rking/ag.vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
+
+" Dracula theme
+colorscheme dracula
 
 " Bindings
 map <C-n> :NERDTreeToggle<CR>
