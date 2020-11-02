@@ -5,6 +5,12 @@ set tabstop=2
 set softtabstop=2
 set expandtab
 
+" Set ruler
+set colorcolumn=80
+
+" <leader>
+let mapleader=","
+
 "Relative line numbers
 set rnu
 
@@ -15,30 +21,29 @@ Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jiangmiao/auto-pairs'
 Plug 'fatih/vim-go'
+Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
-Plug 'kien/ctrlp.vim'
-Plug 'rking/ag.vim'
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'tomasiser/vim-code-dark'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
 call plug#end()
 
-" Dracula theme
-colorscheme dracula
+" Theme
+colorscheme codedark
 
 " Bindings
 map <C-n> :NERDTreeToggle<CR>
+nnoremap <silent> <C-p> :Files<CR>
+nnoremap <C-g> :rightbelow Gstatus<CR>
 
-" vim-arline
+"""" nerdtree
+let g:NERDTreeWinPos = "right"
+
+"""" vim-arline
 let g:airline#extensions#branch#enabled=1
 
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ 'link': 'some_bad_symbolic_links',
-  \ }
-
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""" coc.nvim
+"""" coc.nvim
 " TextEdit might fail if hidden is not set.
 set hidden
 
