@@ -26,6 +26,10 @@ Plug 'vim-airline/vim-airline'
 Plug 'tomasiser/vim-code-dark'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+Plug 'preservim/nerdcommenter'
 
 call plug#end()
 
@@ -35,13 +39,15 @@ colorscheme codedark
 " Bindings
 map <C-n> :NERDTreeToggle<CR>
 nnoremap <silent> <C-p> :Files<CR>
-nnoremap <C-g> :rightbelow Gstatus<CR>
-
+nnoremap <Leader>v :e $MYVIMRC<CR>
+" makes nerdtree toggle on current file
+nnoremap <silent> <expr> <C-n> g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
 """" nerdtree
 let g:NERDTreeWinPos = "right"
 
 """" vim-arline
 let g:airline#extensions#branch#enabled=1
+let g:airline_theme = 'codedark'
 
 """" coc.nvim
 " TextEdit might fail if hidden is not set.
@@ -188,3 +194,12 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
+""" Fugitive
+function! ToggleGStatus()
+    if buflisted(bufname('.git/index'))
+        bd .git/index
+    else
+        rightbelow Gstatus
+    endif
+endfunction
+nnoremap <C-g> :call ToggleGStatus()<CR>
