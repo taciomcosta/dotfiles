@@ -30,6 +30,7 @@ Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 Plug 'preservim/nerdcommenter'
+Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
@@ -38,7 +39,7 @@ colorscheme codedark
 
 " Bindings
 map <C-n> :NERDTreeToggle<CR>
-nnoremap <silent> <C-p> :Files<CR>
+nnoremap <silent> <C-p> :GFiles<CR>
 nnoremap <Leader>v :e $MYVIMRC<CR>
 " makes nerdtree toggle on current file
 nnoremap <silent> <expr> <C-n> g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
@@ -203,3 +204,12 @@ function! ToggleGStatus()
     endif
 endfunction
 nnoremap <C-g> :call ToggleGStatus()<CR>
+
+" Conflict resolution
+nnoremap <leader>gd :Gvdiff<CR>
+nnoremap gdh :diffget //2<CR>
+nnoremap gdl :diffget //3<CR>
+
+" Vimwiki
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
