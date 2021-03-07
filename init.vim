@@ -1,8 +1,8 @@
 " Indenting
 filetype plugin indent on
 set shiftwidth=0
-set tabstop=2
-set softtabstop=2
+set tabstop=4
+set softtabstop=4
 set expandtab
 
 " Set ruler
@@ -26,9 +26,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'tomasiser/vim-code-dark'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+"Plug 'prettier/vim-prettier', {
+  "\ 'do': 'yarn install',
+  "\ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 Plug 'preservim/nerdcommenter'
 
 call plug#end()
@@ -203,3 +203,11 @@ function! ToggleGStatus()
     endif
 endfunction
 nnoremap <C-g> :call ToggleGStatus()<CR>
+nnoremap <C-d> :vertical Gdiffsplit<CR>
+
+""" coc-prettier
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+""" vim-go
+let g:go_metalinter_command='golangci-lint'
+let g:go_metalinter_autosave = 1
