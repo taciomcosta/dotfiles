@@ -31,12 +31,14 @@ Plug 'junegunn/fzf.vim'
   "\ 'do': 'yarn install',
   "\ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 Plug 'preservim/nerdcommenter'
-Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
 " Theme
 colorscheme codedark
+
+" TabColors
+hi TabLineSel ctermbg=Black
 
 " Bindings
 map <C-n> :NERDTreeToggle<CR>
@@ -213,3 +215,7 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 """ vim-go
 let g:go_metalinter_command='golangci-lint'
 let g:go_metalinter_autosave = 1
+
+""" Ag
+nnoremap <Leader>f :Ag 
+
