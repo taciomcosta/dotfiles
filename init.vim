@@ -32,10 +32,12 @@ call plug#begin()
     Plug 'hrsh7th/nvim-compe'
     Plug 'liuchengxu/vista.vim'
     Plug 'ryanoasis/vim-devicons'
+    Plug 'morhetz/gruvbox', {'as': 'gruvbox' }
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 " Theme
-colorscheme codedark
+colorscheme gruvbox
 
 " Bindings
 map <C-n> :NERDTreeToggle<CR>
@@ -217,3 +219,16 @@ highlight LspDiagnosticsDefaultError guifg=Red ctermfg=Red
 highlight LspDiagnosticsUrderlineError guifg=Red ctermfg=Red
 highlight LspDiagnosticsDefaultWarning guifg=Yellow ctermfg=Yellow
 highlight LspDiagnosticsUnderlineWarning guifg=Yellow ctermfg=Yellow
+
+""" Treesitter
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained",
+  ignore_install = {},
+  highlight = {
+    enable = true,
+    disable = {},
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
