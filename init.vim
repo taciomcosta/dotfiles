@@ -4,9 +4,13 @@ set shiftwidth=0
 set tabstop=4
 set softtabstop=4
 set expandtab
+set autoindent
+set noexpandtab
 
 " Set ruler
-set colorcolumn=80
+"set colorcolumn=80
+set colorcolumn=120
+set cursorline
 
 " <leader>
 let mapleader=","
@@ -32,24 +36,34 @@ call plug#begin()
     Plug 'hrsh7th/nvim-compe'
     Plug 'liuchengxu/vista.vim'
     Plug 'ryanoasis/vim-devicons'
-    Plug 'morhetz/gruvbox', {'as': 'gruvbox' }
+    Plug 'Mofiqul/vscode.nvim'
+	Plug 'morhetz/gruvbox', {'as': 'gruvbox' }
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 " Theme
+"colorscheme codedark
+let g:vscode_style = "dark"
 colorscheme gruvbox
 
+" TabColors
+"hi TabLine    gui=NONE guibg=#000000 guifg=#abb2bf    cterm=NONE term=NONE ctermfg=black ctermbg=white
+"hi TabLineSel    gui=NONE guibg=#9b71d7 guifg=#ffffff    cterm=NONE term=NONE ctermfg=black ctermbg=white
+
 " Bindings
-map <C-n> :NERDTreeToggle<CR>
-map <C-m> :Vista!!<CR>
+nnoremap <silent> <expr> <C-n> g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
+nnoremap <Leader>s :Vista nvim_lsp<CR>
 nnoremap <silent> <C-p> :GFiles<CR>
 nnoremap <Leader>v :e $MYVIMRC<CR>
 nnoremap <Leader>n :cn <CR>
 nnoremap <Leader>N :cp <CR>
+nnoremap <Leader>f :Ag 
+
 
 """" Nerdtree
 nmap <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeWinPos = "right"
+let g:NERDTreeWinSize = 50
 
 """" vim-arline
 let g:airline#extensions#branch#enabled=1
@@ -60,7 +74,7 @@ function! ToggleGStatus()
     if buflisted(bufname('.git/index'))
         bd .git/index
     else
-        rightbelow Gstatus
+        rightbelow Git status
     endif
 endfunction
 nnoremap <C-g> :call ToggleGStatus()<CR>
@@ -78,7 +92,7 @@ require'lspconfig'.gopls.setup{
     settings = {
       gopls = {
         analyses = {
-          unusedparams = true,
+          unusedparams = true
         },
         staticcheck = true,
         buildFlags = {"-tags=integration,unit"}
@@ -203,7 +217,7 @@ nnoremap <silent> <Leader>wr <cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>
 nnoremap <silent> <Leader>wl <cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>
 nnoremap <silent> <Leader>D <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> <Leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <silent> <Leader>ca <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> <Leader>qf <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> <space>e <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 nnoremap <silent> [g <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
@@ -211,14 +225,12 @@ nnoremap <silent> ]g <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 nnoremap <silent> <space>q <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
 nnoremap <silent> <space>f <cmd>lua vim.lsp.buf.formatting()<CR>
 
-"highlight! LspDiagnosticsUnderlineError red
-"highlight! LspDiagnosticsUnderlineHint red
-"highlight! LspDiagnosticsUnderlineInfo red
-"highlight! LspDiagnosticsUnderlineWarning red
 highlight LspDiagnosticsDefaultError guifg=Red ctermfg=Red
 highlight LspDiagnosticsUrderlineError guifg=Red ctermfg=Red
 highlight LspDiagnosticsDefaultWarning guifg=Yellow ctermfg=Yellow
 highlight LspDiagnosticsUnderlineWarning guifg=Yellow ctermfg=Yellow
+
+autocmd BufWritePre <buffer> LspDocumentFormatSync
 
 """ Treesitter
 lua <<EOF
