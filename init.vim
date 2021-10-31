@@ -30,8 +30,11 @@ call plug#begin()
     Plug 'vim-airline/vim-airline'
     Plug 'tomasiser/vim-code-dark'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
-    Plug 'preservim/nerdcommenter'
+	
+	Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+ 
+	Plug 'preservim/nerdcommenter'
     Plug 'neovim/nvim-lspconfig'
     Plug 'hrsh7th/nvim-compe'
     Plug 'liuchengxu/vista.vim'
@@ -53,13 +56,13 @@ call plug#end()
 colorscheme gruvbox
 
 " Bindings
-nnoremap <silent> <expr> <C-n> g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
+nnoremap <silent> <expr> <C-n> :NERDTreeFind<CR>
 nnoremap <Leader>s :Vista nvim_lsp<CR>
-nnoremap <silent> <C-p> :GFiles<CR>
+nnoremap <silent> <C-p> :Telescope find_files<CR>
+nnoremap <Leader>f :Telescope grep_string<CR>
 nnoremap <Leader>v :tabnew $MYVIMRC<CR>
 nnoremap <Leader>n :cn <CR>
 nnoremap <Leader>N :cp <CR>
-nnoremap <Leader>f :Ag 
 
 """" Nerdtree
 nmap <C-n> :NERDTreeToggle<CR>
@@ -161,3 +164,28 @@ lua <<EOF
     capabilities = capabilities
   }
 EOF
+
+
+""" LSP
+nnoremap <silent> gD <Cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gd <Cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K <Cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> <Leader>wa <cmd>lua vim.lsp.buf.add_workspace_folder()<CR>
+nnoremap <silent> <Leader>wr <cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>
+nnoremap <silent> <Leader>wl <cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>
+nnoremap <silent> <Leader>D <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> <Leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> <Leader>qf <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> <space>e <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+nnoremap <silent> [g <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> ]g <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap <silent> <space>q <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+nnoremap <silent> <space>f <cmd>lua vim.lsp.buf.formatting()<CR>
+
+highlight LspDiagnosticsDefaultError guifg=Red ctermfg=Red
+highlight LspDiagnosticsUrderlineError guifg=Red ctermfg=Red
+highlight LspDiagnosticsDefaultWarning guifg=Yellow ctermfg=Yellow
+highlight LspDiagnosticsUnderlineWarning guifg=Yellow ctermfg=Yellow
