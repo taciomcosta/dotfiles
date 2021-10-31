@@ -59,7 +59,7 @@ colorscheme gruvbox
 nnoremap <silent> <expr> <C-n> :NERDTreeFind<CR>
 nnoremap <Leader>s :Vista nvim_lsp<CR>
 nnoremap <silent> <C-p> :Telescope find_files<CR>
-nnoremap <Leader>f :Telescope grep_string<CR>
+nnoremap <Leader>f :Telescope live_grep<CR>
 nnoremap <Leader>v :tabnew $MYVIMRC<CR>
 nnoremap <Leader>n :cn <CR>
 nnoremap <Leader>N :cp <CR>
@@ -189,3 +189,17 @@ highlight LspDiagnosticsDefaultError guifg=Red ctermfg=Red
 highlight LspDiagnosticsUrderlineError guifg=Red ctermfg=Red
 highlight LspDiagnosticsDefaultWarning guifg=Yellow ctermfg=Yellow
 highlight LspDiagnosticsUnderlineWarning guifg=Yellow ctermfg=Yellow
+
+
+lua <<EOF
+require('telescope').setup{
+  pickers = {
+    find_files = {
+      theme = "dropdown",
+	},
+    live_grep = {
+      theme = "dropdown",
+    }
+  }
+}
+EOF
