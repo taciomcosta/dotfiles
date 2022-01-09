@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+      - "4571:4571"
+    environment: 
+      - "LOCALSTACK_SERVICES=s3"
+    #networks:
+      #- default
+  #laws:
+    #image: amazon/aws-cli
+    #endpoint:
+    #network:
+      #- localstack
+
+networks:
+  default:
+    external:
+      name: "localstack"
