@@ -18,6 +18,8 @@ let mapleader=","
 "Relative line numbers
 set rnu
 
+set noswapfile
+
 " set encoding for devicons
 set encoding=UTF-8
 
@@ -50,6 +52,10 @@ Plug 'nvim-telescope/telescope.nvim'
 	Plug 'hrsh7th/nvim-cmp'
 	Plug 'hrsh7th/cmp-vsnip'
 	Plug 'hrsh7th/vim-vsnip'
+
+	" bazel
+	Plug 'google/vim-maktaba'
+	Plug 'bazelbuild/vim-bazel'
 call plug#end()
 
 " Theme
@@ -98,6 +104,8 @@ require'lspconfig'.gopls.setup{
 	  },
 	},
 }
+
+require'lspconfig'.ccls.setup{}
 
 local nvim_lsp = require('lspconfig')
 
@@ -201,6 +209,28 @@ require('telescope').setup{
     live_grep = {
       theme = "dropdown",
     }
+  }
+}
+EOF
+
+""" C++ """
+Plug 'prabirshrestha/vim-lsp'
+
+Plug 'Shougo/deoplete.nvim'
+Plug 'lighttiger2505/deoplete-vim-lsp'
+
+
+lua <<EOF
+local lspconfig = require'lspconfig'
+lspconfig.ccls.setup {
+  init_options = {
+    compilationDatabaseDirectory = "build";
+    index = {
+      threads = 0;
+    };
+    clang = {
+      excludeArgs = { "-frounding-math"} ;
+    };
   }
 }
 EOF
